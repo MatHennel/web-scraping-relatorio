@@ -1,32 +1,45 @@
+import requests
+from bs4 import BeautifulSoup
 from selenium import webdriver
-import time
 
-# Configuração do WebDriver
-cService = webdriver.ChromeService(executable_path='C:/Users/mathe/AppData/Local/Programs/Python/Python312/chromedriver.exe')
-driver = webdriver.Chrome(service=cService)
+pesquisa = "BATERIA AUTOMOTIVA HELIAR CURITIBA";
+url = "https://macbateriascuritiba.com.br";
+pesquisaOtimizada = pesquisa.replace(' ','+');
 
-# URL de pesquisa no Google
-url = "https://www.google.com/search?q=BATERIA+AUTOMOTIVA+HELIAR+CURITIBA"
+link = "https://www.google.com/search?q=" + pesquisa;
+headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"};
+requisicao = requests.get(link, headers=headers);
+site = BeautifulSoup(requisicao.text, "html.parser");
 
-# Abrir a URL no navegador controlado pelo WebDriver
-driver.get(url)
 
-# Aguardar um curto período para o conteúdo ser carregado
-time.sleep(5)
 
-# Extrair os links das páginas de resultados
-links = driver.find_all("a", attrs={"jsname": "UWckNb"})
 
-# Lista para armazenar as URLs
-results = []
+cont = 0;
 
-for link in links:
-    href = link.get_attribute('href')
+hrefs = []
+
+
+a_elements = site.find_all("a", attrs={"jsname": "UWckNb"})
+
+
+for a in a_elements:
+    href = a.get("href")  
     if href:
-        results.append({'url': href})
+        hrefs.append(href)  
 
-# Fechar o navegador controlado pelo WebDriver
-driver.quit()
 
-# Imprimir os resultados
-print(results)
+for href in hrefs:
+    print(href)
+    
+    
+for href in hrefs:
+    cont += 1;
+    if url in href:
+        break;
+    
+
+print(cont);
+
+
+
+
