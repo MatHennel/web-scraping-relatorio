@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
 
-pesquisa = "BATERIA AUTOMOTIVA HELIAR CURITIBA";
+pesquisa = "BATERIA AUTOMOTIVA HELIAR juveve";
 url = "https://macbateriascuritiba.com.br";
 pesquisaOtimizada = pesquisa.replace(' ','+');
 
